@@ -11,6 +11,8 @@ public class User {
 
     private Date creatTime;
 
+    private String permission;
+
     public Integer getId() {
         return id;
     }
@@ -41,5 +43,13 @@ public class User {
 
     public void setCreatTime(Date creatTime) {
         this.creatTime = creatTime;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 }
