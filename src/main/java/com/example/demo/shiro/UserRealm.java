@@ -27,6 +27,7 @@ public class UserRealm extends AuthorizingRealm {
         User user = (User) subject.getPrincipal();
 
         System.out.println("AuthorizationInfo->" + user.getPermission());
+        System.out.println("从数据库中获取授权");
         //为用户添加权限
         info.addStringPermission(user.getPermission());
 

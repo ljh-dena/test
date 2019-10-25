@@ -2,6 +2,8 @@ package com.example.demo.shiro;
 
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,6 +55,8 @@ public class shiroConfig {
     public DefaultWebSecurityManager defaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm) {
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setRealm(userRealm);
+        // 自定义缓存实现 使用redis
+        defaultWebSecurityManager.setCacheManager(cacheManager());
         return defaultWebSecurityManager;
     }
 
@@ -62,5 +66,30 @@ public class shiroConfig {
     @Bean(name = "userRealm")
     public UserRealm getRealm() {
         return new UserRealm();
+    }
+
+    /**
+     * cacheManager 缓存 redis实现
+     * 使用的是shiro-redis开源插件
+     */
+    public RedisCacheManager cacheManager() {
+        System.out.println("从redis中获取授权");
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        redisCacheManager.setRedisManager(redisManager());
+        return redisCacheManager;
+    }
+
+    /**
+     * 配置shiro redisManager
+     * 使用的是shiro-redis开源插件
+     */
+    public RedisManager redisManager() {
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost("localhost");
+        redisManager.setPort(6379);
+        redisManager.setTimeout(1800);// 配置缓存过期时间
+        redisManager.setTimeout(0);
+        // redisManager.setPassword(password);
+        return redisManager;
     }
 }

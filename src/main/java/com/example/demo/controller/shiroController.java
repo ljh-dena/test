@@ -43,6 +43,7 @@ public class shiroController {
     public Object login(@RequestParam String username, String password) {
         //  获取Subject
         Subject subject = SecurityUtils.getSubject();
+//        System.out.println(subject.isPermitted("admin"));
         //  封装用户数据
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         //  执行登录方法
