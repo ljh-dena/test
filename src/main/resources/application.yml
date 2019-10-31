@@ -5,10 +5,25 @@ server:
 
 spring:
   datasource:
-    username: root
-    password: root
-    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=GMT%2B8
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      maximum-pool-size: 20
+      max-lifetime: 30000
+      idle-timeout: 30000
+      master:
+        default-package: com.example.demo.dao
+        username: root
+        password: root
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/test2?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=GMT%2B8
+      second:
+        default-package: com.example.demo.dao
+        username: root
+        password: root
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=GMT%2B8
+
+
+
 
   redis:
     host: 127.0.0.1
