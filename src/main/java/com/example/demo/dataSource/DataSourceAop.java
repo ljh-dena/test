@@ -1,6 +1,7 @@
 package com.example.demo.dataSource;
 
 import com.example.demo.annotation.ChooseDataSource;
+import com.example.demo.annotation.DataSource;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 
 @Aspect
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(1)
 @Component
 @Configuration
 public class DataSourceAop {
@@ -36,7 +37,8 @@ public class DataSourceAop {
 
     @Before("switchDataSource()")
     public void doBefore(JoinPoint joinPoint) {
-        System.out.println("切换数据源");
+        logger.info("切换数据源");
+        logger.info("当前数据源为：{}",DynamicDataSourceContextHolder.getDateSoureType());
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
         ChooseDataSource chooseDataSource = method.getAnnotation(ChooseDataSource.class);//获取方法上的注解
         if (chooseDataSource == null) {
@@ -64,7 +66,7 @@ public class DataSourceAop {
             DynamicDataSourceContextHolder.setDateSoureType(dataSourceName);
         }
         String nowDatasource = "".equals(dataSourceName) ? "默认数据源master" : dataSourceName;
-        logger.info("AOP注解切换数据源，className" + joinPoint.getTarget().getClass().getName() + "methodName" + method.getName() + ";dataSourceName:" + nowDatasource);
+        logger.info("AOP注解切换数据源，className:" + joinPoint.getTarget().getClass().getName() + ";methodName:" + method.getName() + ";dataSourceName:" + nowDatasource);
     }
 
     @After("switchDataSource()")
@@ -73,3 +75,28 @@ public class DataSourceAop {
         DynamicDataSourceContextHolder.clearDateSoureType();
     }
 }
+
+//@Aspect
+//@Component
+//public class DataSourceAop {
+//    private static final Logger logger = LoggerFactory.getLogger(DataSourceAop.class);
+//
+//    @Before("@annotation(ds)")
+//    public void changeDataSource(JoinPoint point, DataSource ds) throws Throwable {
+////        String dataSourceName = ds.dataSource().name();
+//        if ( ds.value().equals("second")) {
+//            logger.debug("Use DataSource :{} >", AllDatasource.SECOND.name());
+//            DynamicDataSourceContextHolder.setDateSoureType(AllDatasource.SECOND.name());
+//        } else {
+//            logger.info("数据源不存在，使用默认数据源 >{}", AllDatasource.MASTER.name());
+//            DynamicDataSourceContextHolder.setDateSoureType(AllDatasource.MASTER.name());
+//        }
+//    }
+//
+//    @After("@annotation(ds)")
+//    public void restoreDataSource(JoinPoint point, DataSource ds) {
+//        logger.debug("Revert DataSource : " + ds.value() + " > " + point.getSignature());
+//        DynamicDataSourceContextHolder.clearDateSoureType();
+//
+//    }
+//}

@@ -28,6 +28,7 @@ public class DynamicDataSourceContextHolder {
      * 清空数据源
      */
     public static void clearDateSoureType() {
+        logger.info("清空数据源：{}", DATASOURCE_CONTEXT_HOLDER.get());
         DATASOURCE_CONTEXT_HOLDER.remove();
     }
 }

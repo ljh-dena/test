@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.dataSource.AllDatasource;
+import com.example.demo.dataSource.DynamicDataSourceContextHolder;
 import com.example.demo.pojo.User;
 import com.example.demo.service.IUserService;
 import org.apache.shiro.SecurityUtils;
@@ -43,6 +45,7 @@ public class shiroController {
     public Object login(@RequestParam String username, String password) {
         //  获取Subject
         Subject subject = SecurityUtils.getSubject();
+//        DynamicDataSourceContextHolder.setDateSoureType(AllDatasource.SECOND.name());
 //        System.out.println(subject.isPermitted("admin"));
         //  封装用户数据
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);

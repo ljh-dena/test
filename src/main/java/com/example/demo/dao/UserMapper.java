@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.annotation.ChooseDataSource;
+import com.example.demo.annotation.DataSource;
 import com.example.demo.dataSource.AllDatasource;
 import com.example.demo.pojo.User;
 
@@ -15,10 +16,12 @@ public interface UserMapper {
 
     User selectByPrimaryKey(Integer id);
 
-    @ChooseDataSource(dataSource = AllDatasource.SECOND)
+    @ChooseDataSource
+//    @DataSource
     User selectByName(String username);
 
     @ChooseDataSource(dataSource = AllDatasource.SECOND)
+//    @DataSource("second")
     List<User> selectAllUser();
 
     int updateByPrimaryKeySelective(User record);

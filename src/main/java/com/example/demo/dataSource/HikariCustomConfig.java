@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@MapperScan("com.example.demo.dao")
+//@MapperScan("com.example.demo.dao")
 public class HikariCustomConfig {
 
     public static final Logger logger = LoggerFactory.getLogger(HikariCustomConfig.class);
@@ -49,7 +49,9 @@ public class HikariCustomConfig {
         Map<Object, Object> targetDataSources = new HashMap<>();
         targetDataSources.put(AllDatasource.MASTER.name(), masterDataSource);
         targetDataSources.put(AllDatasource.SECOND.name(), slaveDataSource);
+        DynamicDataSourceContextHolder.setDateSoureType(AllDatasource.MASTER.name());
         logger.info("注册默认数据源成功:"+AllDatasource.MASTER.name());
+        logger.info("获取默认数据源:"+DynamicDataSourceContextHolder.getDateSoureType());
         return new DynamicDataSource(masterDataSource, targetDataSources);
     }
 

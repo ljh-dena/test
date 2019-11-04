@@ -12,5 +12,5 @@ import java.lang.annotation.*;
 @Documented
 public @interface ChooseDataSource {
 
-    AllDatasource dataSource() default AllDatasource.SECOND;
+    AllDatasource dataSource() default AllDatasource.MASTER;
 }

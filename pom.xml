@@ -68,10 +68,15 @@
             <artifactId>shiro-redis</artifactId>
             <version>3.1.0</version>
         </dependency>
+        <!-- aop -->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
             <version>${aspectj.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
     </dependencies>
 
